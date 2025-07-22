@@ -136,6 +136,6 @@ MIT.
 
 ---
 
-**Autor:** [Tu Nombre]
+**Autor:** [Sebastián Galdames](https://www.linkedin.com/in/sebasti%C3%A1n-galdames-963660250/)
 
 Desarrollado con ❤️ usando Node.js, Express y MongoDB.
