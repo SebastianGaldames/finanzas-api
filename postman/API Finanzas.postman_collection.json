@@ -1,0 +1,113 @@
+{
+	"info": {
+		"_postman_id": "662de13f-6fd6-4c00-9836-be0ff160de11",
+		"name": "API Finanzas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31320941"
+	},
+	"item": [
+		{
+			"name": "Registrar categoría",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n      \"nombre\": \"Alimentación\",\r\n      \"descripcion\": \"Gastos de comida\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/categorias",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"categorias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registrar ingreso",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n      \"descripcion\": \"Sueldo\",\r\n      \"monto\": 1000,\r\n      \"fecha\": \"2025-07-01\",\r\n      \"categoria\": \"687f64b93e413e12340351b1\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/ingresos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"ingresos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registrar egreso",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"descripcion\": \"Supermercado\",\r\n    \"monto\": 100,\r\n    \"fecha\": \"2025-07-02\",\r\n    \"categoria\": \"687f64b93e413e12340351b1\"\r\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/egresos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"egresos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
