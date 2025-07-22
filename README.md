@@ -1,83 +1,141 @@
-# finanzas-api
+# Finanzas API
 
-API de finanzas personales con Node.js, Express y MongoDB.
+API RESTful desarrollada con **Node.js**, **Express** y **MongoDB** para la gestión de finanzas personales. Permite registrar ingresos, egresos, organizar categorías, consultar balances y generar reportes en PDF y JSON.
 
-## Estructura del proyecto
+## Descripción del Proyecto
 
-- `src/config/`: Configuración de la base de datos.
-- `src/controllers/`: Lógica de negocio y endpoints de la API.
-- `src/models/`: Modelos de datos de Mongoose.
-- `src/routes/`: Definición de rutas y endpoints.
-- `src/services/`: Servicios auxiliares (ej: generación de reportes).
-- `src/utils/`: Utilidades generales (ej: generación de PDF).
-- `src/index.js`: Punto de entrada de la aplicación.
+Este proyecto proporciona una API robusta para:
+
+- Registrar ingresos y egresos.
+- Organizar movimientos por categorías.
+- Consultar balances mensuales y anuales.
+- Generar reportes en PDF y JSON.
+
+La base de datos utilizada es **MongoDB**, accedida mediante **Mongoose**.
+
+## Tecnologías principales
+
+- [Node.js](https://nodejs.org/)
+- [Express](https://expressjs.com/)
+- [MongoDB](https://www.mongodb.com/) + [Mongoose](https://mongoosejs.com/)
+- [pdfkit](https://pdfkit.org/) para generación de PDF
+- Docker y docker-compose
+
+## Instalación
+
+1. Clona el repositorio:
+   ```bash
+   git clone <url-del-repositorio>
+   cd finanzas-api
+   ```
+2. Instala las dependencias:
+   ```bash
+   npm install
+   ```
+3. Configura las variables de entorno en un archivo `.env` (ejemplo):
+   ```env
+   MONGO_URI=mongodb://localhost:27017/finanzas
+   PORT=3000
+   ```
+
+## Pruebas con Postman
+
+Puedes probar la API usando Postman. Ejemplo de peticiones:
+
+- **Registrar categoría:**
+  - POST `/api/categorias`
+  - Body:
+    ```json
+    {
+      "nombre": "Alimentación",
+      "descripcion": "Gastos de comida"
+    }
+    ```
+- **Registrar ingreso:**
+  - POST `/api/ingresos`
+  - Body:
+    ```json
+    {
+      "descripcion": "Sueldo",
+      "monto": 1000,
+      "fecha": "2025-07-01",
+      "categoria": "<id_categoria>"
+    }
+    ```
+- **Registrar egreso:**
+  - POST `/api/egresos`
+  - Body:
+    ```json
+    {
+      "descripcion": "Supermercado",
+      "monto": 200,
+      "fecha": "2025-07-02",
+      "categoria": "<id_categoria>"
+    }
+    ```
+- **Generar reporte PDF:**
+  - GET `/api/ingresos/reporte?year=2025&month=7&format=pdf`
+
+## Uso con Docker
+
+Puedes levantar todo el entorno (API y base de datos MongoDB) fácilmente usando Docker y docker-compose.
+
+### Levantar los servicios
+
+```bash
+docker-compose up --build
+```
+
+Esto iniciará dos servicios:
+
+- **mongo:** Base de datos MongoDB, expuesta en el puerto 27017.
+- **api:** La API de Express, expuesta en el puerto 3000.
+
+La API estará disponible en `http://localhost:3000` y la base de datos en `mongodb://localhost:27017`.
+
+Para detener los servicios:
+
+```bash
+docker-compose down
+```
+
+## Uso manual (sin Docker)
+
+### Desarrollo
+
+```bash
+npm run dev
+```
+
+### Producción
+
+```bash
+npm start
+```
+
+La API estará disponible en `http://localhost:3000` (o el puerto configurado).
 
 ## Endpoints principales
 
-- **Categorías**
-  - `POST /api/categorias` — Crear categoría
-  - `GET /api/categorias` — Listar categorías
-- **Ingresos**
-  - `POST /api/ingresos` — Crear ingreso
-  - `GET /api/ingresos` — Listar ingresos
-  - `GET /api/ingresos/balance/mensual` — Balance mensual
-  - `GET /api/ingresos/balance/anual` — Balance anual
-  - `GET /api/ingresos/reporte` — Reporte (JSON o PDF)
-- **Egresos**
-  - `POST /api/egresos` — Crear egreso
-  - `GET /api/egresos` — Listar egresos
-  - `GET /api/egresos/balance/mensual` — Balance mensual
-  - `GET /api/egresos/balance/anual` — Balance anual
+- `/api/categorias` — Gestión de categorías (GET, POST)
+- `/api/ingresos` — Gestión de ingresos (GET, POST)
+- `/api/egresos` — Gestión de egresos (GET, POST)
+- `/api/ingresos/balance/mensual` — Balance mensual de ingresos
+- `/api/ingresos/balance/anual` — Balance anual de ingresos
+- `/api/egresos/balance/mensual` — Balance mensual de egresos
+- `/api/egresos/balance/anual` — Balance anual de egresos
+- `/api/ingresos/reporte` — Reporte de ingresos y egresos (JSON o PDF)
 
-## Uso de comentarios en el código
+## Despliegue
 
-> Todos los archivos clave están comentados para facilitar el mantenimiento y la comprensión del código. Los comentarios explican la finalidad de cada función, los parámetros esperados y el flujo general de la lógica. Por ejemplo:
+Puedes desplegar la aplicación en cualquier servidor Node.js. Asegúrate de tener configuradas las variables de entorno y acceso a una instancia de MongoDB.
 
-- **Controladores:**
-  - Se comenta cada función exportada, indicando qué hace y qué espera recibir.
-  - Ejemplo:
-    ```js
-    // Crea un nuevo ingreso
-    exports.createIngreso = async (req, res) => { ... }
-    ```
-- **Modelos:**
-  - Se documentan los campos principales y relaciones entre modelos.
-  - Ejemplo:
-    ```js
-    // Modelo de ingreso
-    // - descripcion: String
-    // - monto: Number
-    // - fecha: Date
-    // - categoria: referencia a Categoria
-    ```
-- **Rutas:**
-  - Se comenta cada endpoint, indicando el método y la funcionalidad.
-  - Ejemplo:
-    ```js
-    // POST /api/ingresos — Crea un nuevo ingreso
-    router.post("/", ingresoController.createIngreso);
-    ```
-- **Servicios y utilidades:**
-  - Se explica la finalidad de cada función y los parámetros que recibe.
+## Licencia
 
-## Buenas prácticas recomendadas
-
-- Comentar siempre el propósito de cada archivo y función.
-- Explicar los parámetros y valores de retorno.
-- Usar comentarios para aclarar lógica compleja o validaciones importantes.
-- Mantener los comentarios actualizados si se modifica la lógica.
-
-## Ejecución y pruebas
-
-- `npm run dev` — Inicia el servidor en modo desarrollo con nodemon
-- `npm start` — Inicia el servidor en modo producción
-- `docker-compose up --build` — Levanta la API y MongoDB en contenedores
-
-## Variables de entorno
-
-- `MONGO_URI` — URI de conexión a MongoDB
-- `PORT` — Puerto de la API
+MIT.
 
 ---
 
-> **Recuerda:** Comentar el código no es solo para otros, ¡también para tu yo del futuro! Un buen comentario puede ahorrar mucho tiempo de debugging y facilita el trabajo en equipo.
+**Autor:** [Tu Nombre]
+
+Desarrollado con ❤️ usando Node.js, Express y MongoDB.
